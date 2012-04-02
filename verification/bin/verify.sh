@@ -39,13 +39,16 @@ time3=`cat ./tmp/log | grep transform-time`
 echo -e "buildCmsSelector('cs', '$4_cms2.png');\n" >> ./tmp/$4_result.html
 echo -e "time('cs', '${time3##* }');\n" >> ./tmp/$4_result.html
 
-./compare-image ./tmp/$4_cms0.png ./tmp/$4_cms1.png | sort -r | head > ./tmp/diff
-totaldifflcms=`cat ./tmp/diff | grep Total`
-cat ./tmp/diff | grep Diff | sed 's/^/diff("lcms","/;s/$/");/' >> ./tmp/$4_result.html
-./compare-image ./tmp/$4_cms0.png ./tmp/$4_cms2.png | sort -r | head > ./tmp/diff
-totaldiffcs=`cat ./tmp/diff | grep Total`
-cat ./tmp/diff | grep Diff | sed 's/^/diff("cs","/;s/$/");/' >> ./tmp/$4_result.html
-echo -e "cms('$4_cms0.png');\n" >> ./tmp/$4_result.html
+if [ -z "$SKIP_COMPARE" ]
+then
+  ./compare-image ./tmp/$4_cms0.png ./tmp/$4_cms1.png | sort -r | head > ./tmp/diff
+  totaldifflcms=`cat ./tmp/diff | grep Total`
+  cat ./tmp/diff | grep Diff | sed 's/^/diff("lcms","/;s/$/");/' >> ./tmp/$4_result.html
+  ./compare-image ./tmp/$4_cms0.png ./tmp/$4_cms2.png | sort -r | head > ./tmp/diff
+  totaldiffcs=`cat ./tmp/diff | grep Total`
+  cat ./tmp/diff | grep Diff | sed 's/^/diff("cs","/;s/$/");/' >> ./tmp/$4_result.html
+  echo -e "cms('$4_cms0.png');\n" >> ./tmp/$4_result.html
+fi
 
 echo -e "buildCmsSelector('Orignal', '$3');\n" >> ./tmp/$4_result.html
 cat misc/result_footer.html >> ./tmp/$4_result.html
