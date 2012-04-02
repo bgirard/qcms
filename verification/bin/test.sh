@@ -49,6 +49,10 @@ cp images/Upper_Right.png tmp/transform3.png
 ./bin/verify.sh profiles/bugzilla/Monitor-09-05-31.icc profiles/sRGB.icc transform.png pic76 "v4 LUT for Dell 2408WFP by Eye-One Match 3 using Eye-One Display 2" bugzilla 2> /dev/null
 ./bin/verify.sh profiles/bugzilla/HP-LP2475w-Wide-LCD-Monitor.icm profiles/sRGB.icc transform.png pic77 "Profile for HP LP2475w from Spyder2" bugzilla 2> /dev/null
 
+# Bugs
+# Bug 722831 - some grayscale png imagese display improperly
+./bin/verify.sh profiles/bugzilla/bug722831in.icc profiles/bugzilla/bug722831out.icc transform.png pic80 "Bug 722831 - some grayscale png imagese display improperly" bugzilla 2> /dev/null
+
 
 cat ./misc/overview_header.html > ./tmp/overview.html
 find tmp -name "*summary.html" | xargs cat >> ./tmp/overview.html
